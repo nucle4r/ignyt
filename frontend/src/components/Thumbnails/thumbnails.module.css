@@ -1,0 +1,107 @@
+.list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  list-style-type: none;
+  padding: 0;
+}
+
+.card{
+  display: "flex";
+  max-width: "380px";
+  margin: "0.5rem";
+  border: "1px solid #c99734";
+  border-radius: "1rem";
+  background-color: "#000";
+  
+}
+
+.list li a {
+  height: 11rem;
+  width: 20rem;
+  border: 1px solid #c99734;
+  border-radius: 1rem;
+  margin: 0.5rem;
+  display: flex;
+  flex-direction: row-reverse;
+  overflow: hidden;
+  font-weight: bold;
+  color: #ffca28;
+}
+
+.image {
+  padding: 0.5rem;
+  object-fit: cover;
+  align-self: center;
+  height: 8rem;
+  width: 8rem;
+  border-radius: 1rem;
+  margin-right: 0.5rem;
+}
+
+.content {
+  margin-top: 0.3rem;
+  padding: 0.5rem 1rem;
+  position: relative;
+  height: 7rem;
+}
+
+.favorite {
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  font-size: 1.2rem;
+  color: #B01E28;
+}
+
+.favorite.not {
+  color: rgb(170, 170, 170);
+}
+
+.stars {
+  margin: 0.5rem 0;
+}
+
+.product_item_footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.origins span {
+  border-radius: 2rem;
+  background-color: whitesmoke;
+  display: inline-block;
+  font-size: 0.8rem;
+  color: grey;
+  margin-right: 0.3rem;
+  padding: 0 0.5rem;
+  margin-top: 0.2rem;
+}
+
+.origins {
+  flex: 9;
+}
+
+.cook_time {
+  font-size: 0.9rem;
+
+  flex: 3;
+  text-align: right;
+}
+
+.price {
+  position: relative;
+  bottom: 0;
+  background-color: #000000;
+  padding: 0.3rem 100% 0 0;
+  color: white;
+  margin-top: 0.7rem;
+  font-size: medium;
+}
+
+.desc {
+  font-size: small;
+  color: #edd87f;
+}
