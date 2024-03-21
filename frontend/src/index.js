@@ -12,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { LoadingProvider } from './hooks/useLoading';
 import './interceptors/authInterceptor';
 
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>

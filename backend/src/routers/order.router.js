@@ -5,7 +5,7 @@ import { BAD_REQUEST } from '../constants/httpStatus.js';
 import { OrderModel } from '../models/order.model.js';
 import { OrderStatus } from '../constants/orderStatus.js';
 import { UserModel } from '../models/user.model.js';
-import { sendEmailReceipt } from '../helpers/mail.helper.js';
+import admin from '../middleware/admin.mid.js';
 
 const router = Router();
 router.use(auth);
@@ -17,11 +17,6 @@ router.post(
 
     if (order.items.length <= 0) res.status(BAD_REQUEST).send('Cart Is Empty!');
 
-    await OrderModel.deleteOne({
-      user: req.user.id,
-      status: OrderStatus.NEW,
-    });
-
     const newOrder = new OrderModel({ ...order, user: req.user.id });
     await newOrder.save();
     res.send(newOrder);
@@ -29,24 +24,28 @@ router.post(
 );
 
 router.put(
-  '/pay',
+  '/update/:orderID',
+  admin,
   handler(async (req, res) => {
-    const { paymentId } = req.body;
-    const order = await getNewOrderForCurrentUser(req);
-    if (!order) {
-      res.status(BAD_REQUEST).send('Order Not Found!');
+    const { orderID } = req.params;
+    const { status } = req.body
+
+    const order = await OrderModel.findById(orderID);
+
+    if (status === order.status) {
+      res.status(BAD_REQUEST).send(`Order Already Marked as: ${status}`);
       return;
     }
 
-    order.paymentId = paymentId;
-    order.status = OrderStatus.PAYED;
-    await order.save();
 
-    sendEmailReceipt(order);
-
-    res.send(order._id);
+    await OrderModel.findByIdAndUpdate(orderID, {
+      status
+    });
+    order.save();
+    res.send(order.status);
   })
 );
+
 
 router.get(
   '/track/:orderId',
@@ -70,14 +69,6 @@ router.get(
   })
 );
 
-router.get(
-  '/newOrderForCurrentUser',
-  handler(async (req, res) => {
-    const order = await getNewOrderForCurrentUser(req);
-    if (order) res.send(order);
-    else res.status(BAD_REQUEST).send();
-  })
-);
 
 router.get('/allstatus', (req, res) => {
   const allStatus = Object.values(OrderStatus);
@@ -98,10 +89,4 @@ router.get(
     res.send(orders);
   })
 );
-
-const getNewOrderForCurrentUser = async req =>
-  await OrderModel.findOne({
-    user: req.user.id,
-    status: OrderStatus.NEW,
-  }).populate('user');
 export default router;

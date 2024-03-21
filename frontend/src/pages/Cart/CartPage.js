@@ -1,73 +1,91 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { Button, ButtonGroup, Typography, List, ListItem, ListItemAvatar, ListItemText, ListItemSecondaryAction, IconButton, Divider } from '@mui/material';
+import { Add as AddIcon, Remove as RemoveIcon, Delete as DeleteIcon } from '@mui/icons-material';
+import { useCart } from '../../hooks/useCart';
+import { useAuth } from '../../hooks/useAuth';
+import { createOrder } from '../../services/orderService';
 import Price from '../../components/Price/Price';
 import Title from '../../components/Title/Title';
-import { useCart } from '../../hooks/useCart';
-import classes from './cartPage.module.css';
 import NotFound from '../../components/NotFound/NotFound';
+import classes from './cartPage.module.css'
+
 export default function CartPage() {
-  const { cart, removeFromCart, changeQuantity } = useCart();
+  const { cart, addToCart, removeFromCart, cartQuantities, changeQuantity, clearCart } = useCart();
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const handleConfirm = async (e) => {
+    e.preventDefault();
+    await createOrder({ ...cart, name: user.name });
+    await clearCart();
+    navigate('/orders');
+  };
+
+  const handleDecreaseQuantity = (food) => {
+    if (cartQuantities[food.id] > 1) {
+      changeQuantity(food.id, cartQuantities[food.id] - 1);
+    } else {
+      removeFromCart(food.id);
+    }
+  };
+
   return (
     <>
-      <Title title="Cart Page" margin="1.5rem 0 0 2.5rem" />
+      <Title title="Your Cart" margin="1.5rem 0 0 2.5rem" />
 
       {cart.items.length === 0 ? (
-        <NotFound message="Cart Page Is Empty!" />
+        <NotFound message="Your Cart is Empty!" />
       ) : (
         <div className={classes.container}>
-          <ul className={classes.list}>
-            {cart.items.map(item => (
-              <li key={item.food.id}>
-                <div>
-                  <img src={`${item.food.imageUrl}`} alt={item.food.name} />
-                </div>
-                <div>
-                  <Link to={`/food/${item.food.id}`}>{item.food.name}</Link>
-                </div>
+          <List sx={{ width: "400px", backgroundColor: '#333', color: '#fff', borderRadius: "20px" }}>
+            {cart.items.map((item) => (
+              <ListItem key={item.food.id}>
+                <ListItemAvatar>
+                  <img src={`${item.food.imageUrl}`} alt={item.food.name} style={{ width: '64px', height: '64px', borderRadius: "15px" }} />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={
+                    <Link to={`/food/${item.food.id}`} style={{ color: '#fff', padding: 10 }}>
+                      {item.food.name}
+                    </Link>
+                  }
+                  secondary={
+                    <ButtonGroup size="small" sx={{p:1}}>
+                      <Button color="success" sx={{ position: "realtive", fontSize: '12px' }} variant="contained" onClick={() => handleDecreaseQuantity(item.food)}>
+                        <RemoveIcon />
+                      </Button>
+                      <Button color="success" sx={{ position: "realtive", fontSize: '12px' }} variant="contained">
+                        <Typography sx={{ padding: "0", fontSize: "14px" }}>{cartQuantities[item.food.id]}</Typography>
+                      </Button>
+                      <Button color="success" sx={{ position: "realtive", fontSize: '12px' }} variant="contained" onClick={() => addToCart(item.food)}>
+                        <AddIcon />
+                      </Button>
+                    </ButtonGroup>
+                  }
+                />
+                <ListItemText
+                  primary={<Price price={item.price} />}
+                  secondary={
+                    <IconButton edge="end" aria-label="delete" onClick={() => removeFromCart(item.food.id)}>
+                      <DeleteIcon color='error'/>
+                    </IconButton>
+                  }
+                  sx={{ flex: '0 0 auto' }}
+                />
+                <Divider />
+              </ListItem>
 
-                <div>
-                  <select
-                    value={item.quantity}
-                    onChange={e => changeQuantity(item, Number(e.target.value))}
-                  >
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                    <option>10</option>
-                  </select>
-                </div>
-
-                <div className={classes.price}>
-                  <Price price={item.price} />
-                </div>
-
-                <div>
-                  <button
-                    className={classes.remove_button}
-                    onClick={() => removeFromCart(item.food.id)}
-                  >
-                    Remove
-                  </button>
-                </div>
-              </li>
             ))}
-          </ul>
 
-          <div className={classes.checkout}>
-            <div>
-              <div className={classes.foods_count}>{cart.totalCount}</div>
-              <div className={classes.total_price}>
-                <Price price={cart.totalPrice} />
-              </div>
-            </div>
+          </List>
 
-            <Link to="/checkout">Confirm Order</Link>
+          <div style={{ marginTop: '1rem', textAlign: 'center' }}>
+            <Typography variant="h6" style={{ color: '#fff' }}>Total Items: {cart.totalCount}</Typography>
+            <Typography variant="h6" style={{ color: '#fff' }}>Total Price: <Price price={cart.totalPrice} /></Typography>
+            <Button variant="contained" onClick={handleConfirm} style={{ marginTop: '1rem' }}>
+              Confirm Order
+            </Button>
           </div>
         </div>
       )}

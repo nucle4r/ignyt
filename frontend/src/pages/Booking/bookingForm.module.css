@@ -1,0 +1,36 @@
+.title {
+    color: #ffca28;
+    font-family: "Quicksand";
+    padding: 30px 0px;
+
+  }
+  
+  .input {
+    border-radius: 8px;
+    background-color: white;
+    width: 100%;
+    height: 56px; /* Adjusted height */
+    margin-bottom: 16px;
+    color: black;
+  }
+    
+  .buttonContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+  }
+  
+  .buttonContainer button {
+    margin: 0 8px;
+    padding: 16px 32px; /* Adjusted padding */
+    background-color: #c99734;
+    color: #111111;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .buttonContainer button:hover {
+    background-color: #ffca28;
+  }
+  

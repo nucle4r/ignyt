@@ -26,17 +26,3 @@
   display: inline-block;
   width: 20%;
 }
-
-.payment {
-  width: 100%;
-  text-align: center;
-  margin-top: 2rem;
-  margin-bottom: 5rem;
-}
-
-.payment a {
-  background-color: #ff4d4d;
-  color: white;
-  padding: 0.8rem 5rem;
-  border-radius: 1rem;
-}

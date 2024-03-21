@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
 import Price from '../../components/Price/Price';
 import { useCart } from '../../hooks/useCart';
 import { getById } from '../../services/foodService';
@@ -15,6 +16,7 @@ export default function FoodPage() {
   const { id } = useParams();
   const { addToCart } = useCart();
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const handleAddToCart = () => {
     addToCart(food);
@@ -52,14 +54,17 @@ export default function FoodPage() {
               <Typography variant="body2" color="text.secondary" sx={{ color: "#edd87f", textAlign: "justify", textJustify: "inter-word", fontStyle: "italic" }}>
                 {food.desc}
               </Typography>
-              {food.cookTime ? <Typography variant="body1" color="text.secondary" sx={{ color: "white", textAlign: "center", margin:"1.5rem"}}>
+              {food.cookTime ? <Typography variant="body1" color="text.secondary" sx={{ color: "white", textAlign: "center", margin: "1.5rem" }}>
                 Time to cook about {`${food.cookTime}`} minutes
-              </Typography> : null}      
+              </Typography> : null}
               <Stack direction="row" sx={{ margin: "10px 0", justifyContent: "space-between" }}>
                 <Typography gutterBottom variant="body" component="div" sx={{ color: "white" }}>
                   <Price className={classes.price} price={food.price} />
                 </Typography>
-                <button onClick={handleAddToCart}>Add to Cart</button>
+                {!user || !user.isAdmin ? (
+                  <button onClick={handleAddToCart}>Add to Cart</button>
+                ) : user.isAdmin ? <Link to={'/admin/editFood/' + food.id}>Edit</Link>
+                  : null}
               </Stack>
 
             </CardContent>

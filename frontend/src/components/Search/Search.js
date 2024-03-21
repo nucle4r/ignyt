@@ -3,8 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import classes from './search.module.css';
 
 Search.defaultProps = {
-  searchRoute: '/search/',
-  defaultRoute: '/',
+  searchRoute: '/menu/search/',
+  defaultRoute: '/menu/',
   placeholder: 'Search IGNYT!',
 };
 

@@ -45,6 +45,9 @@ a.add_food:hover {
 
 .actions > a {
   margin-right: 1rem;
-  color: darkblue;
+  color: rgb(255, 183, 0);
   cursor: pointer;
+}
+.price {
+  color: white;
 }

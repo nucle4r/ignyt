@@ -5,8 +5,11 @@ import NotFound from '../../components/NotFound/NotFound';
 import classes from './orderTrackPage.module.css';
 import DateTime from '../../components/DateTime/DateTime';
 import OrderItemsList from '../../components/OrderItemsList/OrderItemsList';
-import Title from '../../components/Title/Title';
-import Map from '../../components/Map/Map';
+import Card from '@mui/material/Card';
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import Divider from '@mui/material/Divider';
+import Typography from '@mui/material/Typography';
 
 export default function OrderTrackPage() {
   const { orderId } = useParams();
@@ -25,46 +28,33 @@ export default function OrderTrackPage() {
   return (
     order && (
       <div className={classes.container}>
-        <div className={classes.content}>
-          <h1>Order #{order.id}</h1>
-          <div className={classes.header}>
-            <div>
-              <strong>Date</strong>
-              <DateTime date={order.createdAt} />
-            </div>
-            <div>
-              <strong>Name</strong>
-              {order.name}
-            </div>
-            <div>
-              <strong>Address</strong>
-              {order.address}
-            </div>
-            <div>
-              <strong>State</strong>
-              {order.status}
-            </div>
-            {order.paymentId && (
-              <div>
-                <strong>Payment ID</strong>
-                {order.paymentId}
-              </div>
-            )}
-          </div>
-
-          <OrderItemsList order={order} />
-        </div>
-
-        <div>
-          <Title title="Your Location" fontSize="1.6rem" />
-          <Map location={order.addressLatLng} readonly={true} />
-        </div>
-
-        {order.status === 'NEW' && (
-          <div className={classes.payment}>
-            <Link to="/payment">Go To Payment</Link>
-          </div>
-        )}
+        <Card variant="elevation" sx={{ width: 400 }}>
+          <Box sx={{ p: 2 }}>
+            <Stack direction="row" justifyContent="space-between" alignItems="center">
+              <Typography gutterBottom variant="body" component="div">
+                #{order.id}
+              </Typography>
+              <Typography gutterBottom variant="body2" component="div" sx={{ fontWeight: "bold", textDecoration: "underline", color: (order.status == 'NEW' ? 'blue' : order.status == 'PREPARING' ? "#f57c00" : order.status == 'SERVED' ? "green" : order.status == 'CANCELED' ? "red" : "black") }}>
+                {order.status}
+              </Typography>
+            </Stack>
+            <Typography color="text.secondary" variant="body2">
+              <strong>Date: </strong> <DateTime date={order.createdAt} />
+            </Typography>
+            <Typography color="text.secondary" variant="body2">
+              <strong>Name: </strong> {order.name}
+            </Typography>
+          </Box>
+          <Divider />
+          <Box sx={{ p: 2 }}>
+            <Typography gutterBottom variant="body2">
+              Order Details:
+            </Typography>
+            <Stack direction="row" spacing={1}>
+              <OrderItemsList order={order} />
+            </Stack>
+          </Box>
+        </Card>
       </div>
     )
   );

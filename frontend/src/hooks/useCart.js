@@ -13,6 +13,7 @@ export default function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState(initCart.items);
   const [totalPrice, setTotalPrice] = useState(initCart.totalPrice);
   const [totalCount, setTotalCount] = useState(initCart.totalCount);
+  const [cartQuantities, setCartQuantities] = useState(initCart.cartQuantities || {});
 
   useEffect(() => {
     const totalPrice = sum(cartItems.map(item => item.price));
@@ -26,9 +27,10 @@ export default function CartProvider({ children }) {
         items: cartItems,
         totalPrice,
         totalCount,
+        cartQuantities,
       })
     );
-  }, [cartItems]);
+  }, [cartItems, cartQuantities]);
 
   function getCartFromLocalStorage() {
     const storedCart = localStorage.getItem(CART_KEY);
@@ -42,37 +44,59 @@ export default function CartProvider({ children }) {
   const removeFromCart = foodId => {
     const filteredCartItems = cartItems.filter(item => item.food.id !== foodId);
     setCartItems(filteredCartItems);
+    setCartQuantities(prevQuantities => {
+      const updatedQuantities = { ...prevQuantities };
+      delete updatedQuantities[foodId];
+      return updatedQuantities;
+    });
   };
 
-  const changeQuantity = (cartItem, newQauntity) => {
-    const { food } = cartItem;
-
-    const changedCartItem = {
-      ...cartItem,
-      quantity: newQauntity,
-      price: food.price * newQauntity,
-    };
-
-    setCartItems(
-      cartItems.map(item => (item.food.id === food.id ? changedCartItem : item))
-    );
+  const changeQuantity = (foodId, newQuantity) => {
+    const updatedCartItems = cartItems.map(item => {
+      if (item.food.id === foodId) {
+        return {
+          ...item,
+          quantity: newQuantity,
+          price: item.food.price * newQuantity,
+        };
+      }
+      return item;
+    });
+    setCartItems(updatedCartItems);
+    setCartQuantities(prevQuantities => ({
+      ...prevQuantities,
+      [foodId]: newQuantity,
+    }));
   };
 
   const addToCart = food => {
-    const cartItem = cartItems.find(item => item.food.id === food.id);
-    if (cartItem) {
-      changeQuantity(cartItem, cartItem.quantity + 1);
+    const existingCartItem = cartItems.find(item => item.food.id === food.id);
+    if (existingCartItem) {
+      const newQuantity = (cartQuantities[food.id] || 0) + 1;
+      changeQuantity(food.id, newQuantity);
     } else {
-      setCartItems([...cartItems, { food, quantity: 1, price: food.price }]);
+      const updatedCartItems = [
+        ...cartItems,
+        {
+          food,
+          quantity: 1,
+          price: food.price,
+        },
+      ];
+      setCartItems(updatedCartItems);
+      setCartQuantities(prevQuantities => ({
+        ...prevQuantities,
+        [food.id]: 1,
+      }));
     }
   };
 
   const clearCart = () => {
     localStorage.removeItem(CART_KEY);
-    const { items, totalPrice, totalCount } = EMPTY_CART;
-    setCartItems(items);
-    setTotalPrice(totalPrice);
-    setTotalCount(totalCount);
+    setCartItems([]);
+    setTotalPrice(0);
+    setTotalCount(0);
+    setCartQuantities({});
   };
 
   return (
@@ -83,6 +107,7 @@ export default function CartProvider({ children }) {
         changeQuantity,
         addToCart,
         clearCart,
+        cartQuantities,
       }}
     >
       {children}

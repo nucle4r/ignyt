@@ -5,6 +5,47 @@ import { Link } from 'react-router-dom';
 
 export default function Dashboard() {
   const { user } = useAuth();
+  const allItems = [
+    {
+      title: 'Orders',
+      imageUrl: '/icons/orders.svg',
+      url: '/orders',
+      bgColor: '#FB8B24',
+      color: '#111111',
+    },
+    {
+      title: 'Bookings',
+      imageUrl: '/icons/booking.svg',
+      url: '/admin/bookings',
+      forAdmin: true,
+      bgColor: '#FFF78A',
+      color: '#111111',
+    },
+    {
+      title: 'Users',
+      imageUrl: '/icons/users.svg',
+      url: '/admin/users',
+      forAdmin: true,
+      bgColor: '#FFF78A',
+      color: '#111111',
+    },
+    {
+      title: 'Foods',
+      imageUrl: '/icons/foods.svg',
+      url: '/admin/foods',
+      forAdmin: true,
+      bgColor: '#FB8B24',
+      color: '#111111',
+    },
+    {
+      title: 'Profile',
+      imageUrl: '/icons/profile.svg',
+      url: '/profile',
+      bgColor: '#FFF78A',
+      color: '#111111',
+    },
+    
+  ];
 
   return (
     <div className={classes.container}>
@@ -28,36 +69,3 @@ export default function Dashboard() {
     </div>
   );
 }
-
-const allItems = [
-  {
-    title: 'Orders',
-    imageUrl: '/icons/orders.svg',
-    url: '/orders',
-    bgColor: '#ec407a',
-    color: 'white',
-  },
-  {
-    title: 'Profile',
-    imageUrl: '/icons/profile.svg',
-    url: '/profile',
-    bgColor: '#1565c0',
-    color: 'white',
-  },
-  {
-    title: 'Users',
-    imageUrl: '/icons/users.svg',
-    url: '/admin/users',
-    forAdmin: true,
-    bgColor: '#00bfa5',
-    color: 'white',
-  },
-  {
-    title: 'Foods',
-    imageUrl: '/icons/foods.svg',
-    url: '/admin/foods',
-    forAdmin: true,
-    bgColor: '#e040fb',
-    color: 'white',
-  },
-];

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import classes from './tags.module.css';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
@@ -27,7 +26,7 @@ export default function Tags({ tags, forFoodPage }) {
         >
           {tags.map(tag => (
             
-              <Tab key={tag.name} sx={{ color: "#000000" }} label={`${tag.name}`} value={tag.name} component={Link} to={`/tag/${tag.name}`}/>
+              <Tab key={tag.name} sx={{ color: "#000000" }} label={`${tag.name}`} value={tag.name} component={Link} to={`/menu/tag/${tag.name}`}/>
             
           ))}
         </Tabs>

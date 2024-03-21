@@ -59,7 +59,10 @@
 .cart_count {
   background-color: #ff4d4d;
   color: white;
-  padding: 0.1rem 0.45rem;
+  position: relative;
+  left: -8px;
+  top: -20px;
+  padding: 0.1rem 0.35rem;
   border-radius: 100rem;
-  font-size: 0.9rem;
+  font-size: 0.6rem;
 }

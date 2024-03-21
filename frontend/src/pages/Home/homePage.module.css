@@ -1,3 +1,115 @@
-.container {
-background-color: #111111;
-}
+/* homePage.module.css */
+.hero {
+    position: relative;
+    height: calc(100vh - 100px); /* Adjust for the height of the navbar */
+    background-size: cover;
+    background-position: top; /* Start the background image from the top */
+  }
+  
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  
+  .title {
+    color: white;
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .buttons {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .button {
+    border: 2px solid white;
+    background-color: transparent;
+    color: white;
+    padding: 10px 20px;
+    margin: 0 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 25px;
+  }
+  
+  .slideImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.8; /* Adjust opacity if needed */
+  }
+  
+  .aboutSection {
+    background-color: #333;
+    color: white;
+    padding: 50px 0;
+    text-align: center;
+  }
+  
+  .aboutContent {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap; /* Allow items to wrap */
+  }
+  
+  .aboutItem {
+    flex: 1;
+    margin: 20px; /* Add spacing between items */
+    max-width: 300px; /* Limit maximum width */
+  }
+  
+  .aboutItem h3 {
+    font-size: 1.5rem;
+  }
+  
+  .aboutItem p {
+    margin-bottom: 10px;
+  }
+  
+  @media (max-width: 768px) {
+    .hero {
+      height: calc(50vh - 100px); /* Reduce height for smaller devices */
+    }
+  
+    .title {
+      font-size: 2rem; /* Reduce title size */
+    }
+  
+    .button {
+      font-size: 1rem; /* Reduce button size */
+      padding: 8px 16px; /* Adjust button padding */
+    }
+  
+    .aboutContent {
+      flex-direction: column; /* Display items vertically */
+      align-items: center; /* Center items */
+    }
+  
+    .aboutItem {
+      max-width: none; /* Remove max-width restriction */
+      width: 80%; /* Adjust width */
+    }
+  
+    .slideImage {
+      height: calc(50vh - 100px); /* Reduce height for smaller devices */
+    }
+  }
+  

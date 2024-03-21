@@ -139,17 +139,6 @@ export const sample_foods = [
 
   },
   {
-    id: "11",
-    name: "Stout Beer",
-    price: 249,
-    favorite: true,
-    stars: 4.9,
-    imageUrl: "beer-2.jpg",
-    tags: ["Beer", "Stout"],
-    desc: "Rich and creamy stout beer with hints of coffee and chocolate. A satisfying choice for dark beer lovers!"
-
-  },
-  {
     id: "12",
     name: "Pale Ale",
     price: 149,
@@ -192,17 +181,6 @@ export const sample_foods = [
     imageUrl: "food-10.jpg",
     tags: ["FastFood", "Appetizer", "Lunch"],
     desc: "Spicy and flavorful chicken wings, served with a tangy dipping sauce. Perfect for sharing with friends!"
-
-  },
-  {
-    id: "16",
-    name: "Lager",
-    price: 179,
-    favorite: false,
-    stars: 4.2,
-    imageUrl: "beer-6.jpg",
-    tags: ["Beer", "Lager"],
-    desc: "Crisp and refreshing lager beer with a clean taste and a hint of sweetness. A classic choice for any occasion!"
 
   },
   {

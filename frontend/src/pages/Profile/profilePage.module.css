@@ -1,4 +1,4 @@
-.container {
+.container1 {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -6,6 +6,6 @@
   margin-top: 3rem;
 }
 
-.details {
+.details2 {
   width: 28rem;
 }
