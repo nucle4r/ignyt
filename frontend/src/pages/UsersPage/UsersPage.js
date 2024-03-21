@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { useAuth } from '../../hooks/useAuth';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 import { getAll, toggleBlock } from '../../services/userService';
-import classes from './usersPage.module.css';
 import Title from '../../components/Title/Title';
 import Search from '../../components/Search/Search';
+import { useAuth } from '../../hooks/useAuth';
+import './usersPage.module.css';
+import classes from './usersPage.module.css';
 
 export default function UsersPage() {
-  const [users, setUsers] = useState();
+  const [users, setUsers] = useState([]);
   const { searchTerm } = useParams();
   const auth = useAuth();
 
@@ -16,51 +23,54 @@ export default function UsersPage() {
   }, [searchTerm]);
 
   const loadUsers = async () => {
-    const users = await getAll(searchTerm);
-    setUsers(users);
+    const usersData = await getAll(searchTerm);
+    setUsers(usersData);
   };
 
-  const handleToggleBlock = async userId => {
+  const handleToggleBlock = async (userId) => {
     const isBlocked = await toggleBlock(userId);
 
-    setUsers(oldUsers =>
-      oldUsers.map(user => (user.id === userId ? { ...user, isBlocked } : user))
+    setUsers((oldUsers) =>
+      oldUsers.map((user) => (user.id === userId ? { ...user, isBlocked } : user))
     );
   };
 
   return (
     <div className={classes.container}>
-      <div className={classes.list}>
-        <Title title="Manage Users" />
-        <Search
-          searchRoute="/admin/users/"
-          defaultRoute="/admin/users"
-          placeholder="Search Users"
-          margin="1rem 0"
-        />
-        <div className={classes.list_item}>
-          <h3>Name</h3>
-          <h3>Email</h3>
-          <h3>Admin</h3>
-          <h3>Actions</h3>
-        </div>
-        {users &&
-          users.map(user => (
-            <div key={user.id} className={classes.list_item}>
-              <span>{user.name}</span>
-              <span>{user.email}</span>
-              <span>{user.isAdmin ? '✅' : '❌'}</span>
-              <span className={classes.actions}>
-                <Link to={'/admin/editUser/' + user.id}>Edit</Link>
-                {auth.user.id !== user.id && (
-                  <Link onClick={() => handleToggleBlock(user.id)}>
-                    {user.isBlocked ? 'Unblock' : 'Block'}
-                  </Link>
-                )}
-              </span>
-            </div>
-          ))}
-      </div>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Title title="Manage Users" />
+          <Search
+            searchRoute="/admin/users/"
+            defaultRoute="/admin/users"
+            placeholder="Search Users"
+            margin="1rem 0"
+          />
+          <Grid container spacing={2}>
+            {users.map((user) => (
+              <Grid item xs={12} sm={6} md={4} lg={3} key={user.id}>
+                <Card className={classes.card}>
+                  <CardContent>
+                    <Typography variant="h6" gutterBottom>{user.name}</Typography>
+                    <Typography variant="body1" gutterBottom><strong>Email: </strong>{user.email}</Typography>
+                    <Typography variant="body1" gutterBottom><strong>Type: </strong>{user.isAdmin ? 'Admin' : 'User'}</Typography>
+                    <Box className={classes.actions}>
+                      <Button component={Link} to={`/admin/editUser/${user.id}`} color="primary">
+                        Edit
+                      </Button>
+                      {auth.user.id !== user.id && (
+                        <Button onClick={() => handleToggleBlock(user.id)} color="primary">
+                          {user.isBlocked ? 'Unblock' : 'Block'}
+                        </Button>
+                      )}
+                    </Box>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Grid>
+      </Grid>
     </div>
   );
 }

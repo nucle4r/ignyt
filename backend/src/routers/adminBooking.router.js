@@ -105,11 +105,9 @@ router.get(
     handler(async (req, res) => {
         const status = req.params.status;
         const filter = {};
-        console.log(status)
         if (status) filter.status = status;
 
         const bookings = await BookingModel.find(filter).sort('-createdAt');
-        console.log(bookings)
         res.send(bookings);
     })
 );

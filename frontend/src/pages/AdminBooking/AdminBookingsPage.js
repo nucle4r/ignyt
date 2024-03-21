@@ -62,7 +62,6 @@ export default function AdminBookingsPage() {
             <Title title={"Bookings"} margin="1.5rem 0 0 .2rem" fontSize="1.9rem" />
 
             {allStatus && (
-                <div className={classes.all_status}>
                     <Box sx={{ width: "100%", bgcolor: '#edd87f', borderBottom: 1, borderColor: 'divider', margin: '10px' }}>
                         <Tabs
                             variant="scrollable"
@@ -89,8 +88,6 @@ export default function AdminBookingsPage() {
                             ))}
                         </Tabs>
                     </Box>
-
-                </div>
             )}
 
             {bookings?.length === 0 && (
@@ -102,12 +99,12 @@ export default function AdminBookingsPage() {
 
             {bookings &&
                 bookings.map(booking => (
-                    <Card key={booking.id} variant="elevation" sx={{ width: 400, margin: "20px" }}>
+                    <Card key={booking.id} variant="elevation" sx={{ width: "360px", margin: "20px" }}>
                         <div id={booking.id}>
                             <Box sx={{ p: 2 }}>
                                 <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ p: 1 }}>
                                     <Typography gutterBottom variant="body" component="div">
-                                        #{booking.id}
+                                        #{booking.id.substring(18,24)}
                                     </Typography>
                                     <Typography gutterBottom variant="body2" component="div" sx={{ fontWeight: "bold", textDecoration: "underline", color: (booking.status == 'NEW' ? 'blue' : booking.status == 'CONFIRMED' ? "green" : booking.status == 'CANCELED' ? "red" : "black") }}>
                                         {booking.status}

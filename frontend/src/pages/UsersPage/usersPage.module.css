@@ -1,43 +1,15 @@
 .container {
+  padding: 20px;
+}
+
+.card {
+  height: 100%;
   display: flex;
-  justify-content: center;
-  margin-top: 2rem;
-  font-size: 1.2rem;
-}
-
-.list {
-  width: 100%;
-  max-width: 50rem;
-}
-
-.list_item {
-  display: grid;
-  grid-template-columns: 20% 35% 20% 10% 15%;
-  gap: 1%;
-  color: #c99734;
-  align-items: center;
-  border-bottom: 1px solid whitesmoke;
-  min-height: 3rem;
-}
-
-.list_item > * {
-  word-wrap: break-word;
-}
-
-h3 {
-  margin-left: 0;
-  color: #ffca28;
+  flex-direction: column;
 }
 
 .actions {
+  margin-top: 1rem;
   display: flex;
-  gap: 0.7rem;
-  
-}
-
-.actions a {
-  display: flex;
-  gap: 0.7rem;
-  color: #c99734;
-  
+  justify-content: space-between;
 }
