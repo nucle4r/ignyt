@@ -28,11 +28,11 @@ export default function OrderTrackPage() {
   return (
     order && (
       <div className={classes.container}>
-        <Card variant="elevation" sx={{ width: 400 }}>
+        <Card variant="elevation" sx={{ width: "360px" }}>
           <Box sx={{ p: 2 }}>
             <Stack direction="row" justifyContent="space-between" alignItems="center">
               <Typography gutterBottom variant="body" component="div">
-                #{order.id}
+                #{order.id.substring(18,24)}
               </Typography>
               <Typography gutterBottom variant="body2" component="div" sx={{ fontWeight: "bold", textDecoration: "underline", color: (order.status == 'NEW' ? 'blue' : order.status == 'PREPARING' ? "#f57c00" : order.status == 'SERVED' ? "green" : order.status == 'CANCELED' ? "red" : "black") }}>
                 {order.status}

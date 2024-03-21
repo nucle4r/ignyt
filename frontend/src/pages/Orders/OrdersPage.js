@@ -61,7 +61,6 @@ export default function OrdersPage() {
     <div className={classes.container}>
       <Title title={(user.isAdmin ? "Orders" : "Your Orders")} margin="1.5rem 0 0 .2rem" fontSize="1.9rem" />
       {user.isAdmin && allStatus && (
-        <div className={classes.all_status}>
           <Box sx={{ width: "100%", bgcolor: '#edd87f', borderBottom: 1, borderColor: 'divider', margin: '10px' }}>
             <Tabs
               variant="scrollable"
@@ -88,8 +87,6 @@ export default function OrdersPage() {
               ))}
             </Tabs>
           </Box>
-
-        </div>
       )}
 
 
@@ -102,12 +99,12 @@ export default function OrdersPage() {
 
       {orders &&
         orders.map(order => (
-          <Card key={order.id} variant="elevation" sx={{ width: 400, margin: "20px" }}>
+          <Card key={order.id} variant="elevation" sx={{ width: "360px", marginTop: "20px" }}>
             <div id={order.id}>
               <Box sx={{ p: 2 }}>
                 <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ p: 1 }}>
                   <Typography gutterBottom variant="body" component="div">
-                    #{order.id}
+                    #{order.id.substring(18,24)}
                   </Typography>
                   <Typography gutterBottom variant="body2" component="div" sx={{ fontWeight: "bold", textDecoration: "underline", color: (order.status == 'NEW' ? 'blue' : order.status == 'PREPARING' ? "#f57c00" : order.status == 'SERVED' ? "green" : order.status == 'CANCELED' ? "red" : "black") }}>
                     {order.status}

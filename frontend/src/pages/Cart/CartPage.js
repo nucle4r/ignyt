@@ -17,6 +17,10 @@ export default function CartPage() {
 
   const handleConfirm = async (e) => {
     e.preventDefault();
+    if (!user) {
+      navigate(`/login?returnUrl=/cart`);
+      return
+    }
     await createOrder({ ...cart, name: user.name });
     await clearCart();
     navigate('/orders');
@@ -35,10 +39,11 @@ export default function CartPage() {
       <Title title="Your Cart" margin="1.5rem 0 0 2.5rem" />
 
       {cart.items.length === 0 ? (
-        <NotFound message="Your Cart is Empty!" />
+        <NotFound message="Your Cart is Empty!" linkRoute='/menu'
+          linkText='Go To Menu' />
       ) : (
         <div className={classes.container}>
-          <List sx={{ width: "400px", backgroundColor: '#333', color: '#fff', borderRadius: "20px" }}>
+          <List sx={{ width: "360px", backgroundColor: '#333', color: '#fff', borderRadius: "20px" }}>
             {cart.items.map((item) => (
               <ListItem key={item.food.id}>
                 <ListItemAvatar>
@@ -51,7 +56,7 @@ export default function CartPage() {
                     </Link>
                   }
                   secondary={
-                    <ButtonGroup size="small" sx={{p:1}}>
+                    <ButtonGroup size="small" sx={{ p: 1 }}>
                       <Button color="success" sx={{ position: "realtive", fontSize: '12px' }} variant="contained" onClick={() => handleDecreaseQuantity(item.food)}>
                         <RemoveIcon />
                       </Button>
@@ -68,7 +73,7 @@ export default function CartPage() {
                   primary={<Price price={item.price} />}
                   secondary={
                     <IconButton edge="end" aria-label="delete" onClick={() => removeFromCart(item.food.id)}>
-                      <DeleteIcon color='error'/>
+                      <DeleteIcon color='error' />
                     </IconButton>
                   }
                   sx={{ flex: '0 0 auto' }}
