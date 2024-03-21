@@ -33,7 +33,7 @@ export default function HomePage() {
               <div className={classes.content}>
                 <h1 className={classes.title}>{slideImage.caption}</h1>
                 <div className={classes.buttons}>
-                  <button className={classes.button}>Book a Table</button>
+                  <button className={classes.button} onClick={()=> navigate('/bookings')}>Book a Table</button>
                   <button className={classes.button} onClick={()=> navigate('/menu')}>Our Menu</button>
                 </div>
               </div>
