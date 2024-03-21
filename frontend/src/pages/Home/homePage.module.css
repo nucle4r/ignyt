@@ -44,7 +44,7 @@
     font-size: 1.2rem;
     font-weight: bold;
     cursor: pointer;
-    border-radius: 25px;
+    border-radius: 14px;
   }
   
   .slideImage {
@@ -90,12 +90,12 @@
     }
   
     .title {
-      font-size: 2rem; /* Reduce title size */
+      font-size: 1.5rem; /* Reduce title size */
     }
   
     .button {
-      font-size: 1rem; /* Reduce button size */
-      padding: 8px 16px; /* Adjust button padding */
+      font-size: 0.5rem; /* Reduce button size */
+      padding: 8px 5px; /* Adjust button padding */
     }
   
     .aboutContent {
