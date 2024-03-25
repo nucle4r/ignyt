@@ -1,4 +1,4 @@
-# Scan-to-Order for Ignyt
+# Scan-to-Order for Ignyt Beer Station
 
 Welcome to the Scan-to-Order for Ignyt project, a cutting-edge solution that redefines the dining experience at Ignyt Restaurant. Seamlessly integrating digital menu browsing, ordering, and table reservations, this project empowers customers and enhances operational efficiency for restaurant management.
 
